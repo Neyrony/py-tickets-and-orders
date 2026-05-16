@@ -64,7 +64,8 @@ class MovieSession(models.Model):
 
 class Order (models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
-    user = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="users")
+    user = models.ForeignKey(AUTH_USER_MODEL,
+                             on_delete=models.CASCADE, related_name="users")
 
     def __str__(self) -> str:
         return str(self.created_at)
