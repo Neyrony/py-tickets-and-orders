@@ -13,7 +13,7 @@ def create_movie_session(
     )
 
 
-def get_movies_sessions(session_date: str = None) -> QuerySet:
+def get_movies_sessions(session_date: str = None) -> QuerySet[MovieSession]:
     queryset = Q()
     if session_date:
         queryset &= Q(show_time__date=session_date)
