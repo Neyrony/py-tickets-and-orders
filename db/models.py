@@ -64,7 +64,7 @@ class MovieSession(models.Model):
 
 class Order (models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
-    user = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.ForeignKey(AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="users")
 
     def __str__(self) -> str:
         return str(self.created_at)
@@ -99,7 +99,7 @@ class Ticket(models.Model):
 
     def clean(self) -> None:
         super().clean()
-        if self.row < 0 or self.row > self.movie_session.cinema_hall.rows:
+        if self.row < 1 or self.row > self.movie_session.cinema_hall.rows:
             raise ValidationError(
                 {"row":
                     [
@@ -108,7 +108,7 @@ class Ticket(models.Model):
                         f"(1, {self.movie_session.cinema_hall.rows})"
                     ]}
             )
-        elif (self.seat < 0
+        elif (self.seat < 1
               or self.seat > self.movie_session.cinema_hall.seats_in_row):
             raise ValidationError(
                 {"seat": [f"seat number must be in available range: "
